@@ -1,0 +1,91 @@
+<script>
+// If you are using PurgeCSS, make sure to whitelist the carousel CSS classes
+import "vue3-carousel/dist/carousel.css";
+import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
+import digitalImage from "../assets/images/img_shop_digital.jpeg";
+import fasionImage from "../assets/images/img_shop_fashion.jpeg";
+import groceryImage from "../assets/images/img_shop_grocery.jpeg";
+
+export default {
+  name: "CarouselBanner",
+  components: {
+    Carousel,
+    Slide,
+    Pagination,
+  },
+  data() {
+    return {
+      bannerList: [
+        {
+          title: "물빠진 청바지!",
+          description: "이제 막 도착한 패션 청바지를 구경해보세요.",
+          image: fasionImage,
+          category: "fasion",
+        },
+        {
+          title: "신속한 업무처리!",
+          description: "다양한 디지털 상품을 둘러보세요.",
+          image: digitalImage,
+          category: "digital",
+        },
+        {
+          title: "신선한 식품!",
+          description: "농장 직배송으로 더욱 신선한 식료품을 만나보세요.",
+          image: groceryImage,
+          category: "grocery",
+        },
+      ],
+    };
+  },
+};
+</script>
+
+<template>
+  <div class="wrap-carousel">
+    <carousel :autoplay="2000" :wrap-around="true">
+      <slide v-for="(bannerItem, index) in bannerList" :key="index">
+        <div
+          class="banner-item"
+          :style="{
+            backgroundImage: `url(${bannerItem.image})`,
+            backgroundPosition: 'center',
+          }"
+        >
+          <div class="banner-text">
+            <h2>{{ bannerItem.title }}</h2>
+            <p>{{ bannerItem.description }}</p>
+            <button>바로가기</button>
+          </div>
+        </div>
+      </slide>
+      <template #addons>
+        <pagination />
+      </template>
+    </carousel>
+  </div>
+</template>
+
+<style scoped>
+.wrap-carousel {
+  position: relative;
+  top: 62px;
+}
+
+.banner-item {
+  height: 700px;
+  width: 100%;
+  display: flex;
+}
+
+.banner-text {
+  max-width: 1360px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  color: #fff;
+}
+</style>
