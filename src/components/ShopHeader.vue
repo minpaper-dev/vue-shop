@@ -1,6 +1,8 @@
 <script>
+import { RouterLink } from "vue-router";
+
 export default {
-  name: "Header",
+  name: "ShopHeader",
   data() {
     return {
       data: [],
@@ -14,11 +16,22 @@ export default {
     <div class="header">
       <div class="header-inner">
         <div class="header-text">
-          <h1 class="header-title">Vue Shop</h1>
+          <h1 class="header-title">
+            <router-link to="/">Vue Shop</router-link>
+          </h1>
           <div class="header-text-wrap">
-            <a class="header-text-item">패션</a>
-            <a class="header-text-item">악세서리</a>
-            <a class="header-text-item">디지털</a>
+            <router-link to="/jewelery" class="header-text-item"
+              >jewelery</router-link
+            >
+            <router-link to="/electronics" class="header-text-item"
+              >electronics</router-link
+            >
+            <router-link to="/men" class="header-text-item"
+              >men's clothing</router-link
+            >
+            <router-link to="/women" class="header-text-item"
+              >women's clothing</router-link
+            >
           </div>
         </div>
         <div class="header-icon">
@@ -49,7 +62,7 @@ export default {
 }
 .header {
   background-color: rgb(25, 29, 36);
-  color: #fff;
+
   padding: 8px;
   display: flex;
   align-items: center;
@@ -72,6 +85,7 @@ export default {
   cursor: pointer;
   margin: 0 8px;
   font-size: 16px;
+  color: #fff;
 }
 
 .header-text-wrap {
@@ -88,5 +102,9 @@ export default {
   height: 46px;
   padding: 0px 16px;
   border: 1px solid black;
+}
+
+a {
+  color: #fff;
 }
 </style>
