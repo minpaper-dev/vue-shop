@@ -7,10 +7,10 @@ import Jewelery from './components/JeweleryPage.vue'
 const routes = [
     // { path: '/', name : "Main", component: Main },
     { path: '/',  component: Main },
-    { path: '/jewelery', component: CategoryListPage },
-    { path: '/electronics', component: CategoryListPage },
-    { path: '/men', component: CategoryListPage },
-    { path: '/women', component: CategoryListPage },
+    { path: '/jewelery', name:"jewelery", component: CategoryListPage, props : {category :'jewelery' } },
+    { path: '/electronics', name:"electronics",component: CategoryListPage , props : {category :'electronics' }},
+    { path: '/men',name:"men", component: CategoryListPage , props : {category :"men's clothing" }},
+    { path: '/women', name:"women",component: CategoryListPage, props : {category :"women's clothing" } },
     { path: '/product/:id', component: Jewelery , props : true},
     { path: "/:pathMatch(.*)", name : 'No-match', redirect : '/' },
   ]

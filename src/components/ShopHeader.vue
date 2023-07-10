@@ -20,16 +20,16 @@ export default {
             <router-link to="/">Vue Shop</router-link>
           </h1>
           <div class="header-text-wrap">
-            <router-link to="/jewelery" class="header-text-item"
+            <router-link :to="{ name: 'jewelery' }" class="header-text-item"
               >jewelery</router-link
             >
-            <router-link to="/electronics" class="header-text-item"
+            <router-link :to="{ name: 'electronics' }" class="header-text-item"
               >electronics</router-link
             >
-            <router-link to="/men" class="header-text-item"
+            <router-link :to="{ name: 'men' }" class="header-text-item"
               >men's clothing</router-link
             >
-            <router-link to="/women" class="header-text-item"
+            <router-link :to="{ name: 'women' }" class="header-text-item"
               >women's clothing</router-link
             >
           </div>
