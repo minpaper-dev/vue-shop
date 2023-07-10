@@ -26,7 +26,19 @@ export default {
 </script>
 
 <template>
-  <product-list v-bind:category="category"></product-list>
+  <div class="wrap">
+    <h3>home > {{ category }}</h3>
+    <product-list v-bind:category="category"></product-list>
+  </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.wrap {
+  position: relative;
+  top: 62px;
+  max-width: 1360px;
+  width: 100%;
+  margin: 0 auto;
+  padding-bottom: 62px;
+}
+</style>

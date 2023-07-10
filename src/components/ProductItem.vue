@@ -44,16 +44,11 @@ h2 {
   color: #fff;
 }
 .container {
-  max-width: 1360px;
-  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  /* position: relative;
-  top: 62px; */
+
   padding: 48px 8px 32px;
-  margin: 0 auto;
 }
 .product-card-wrap-image {
   width: 100%;

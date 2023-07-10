@@ -26,12 +26,22 @@ export default {
 
 <template>
   <carousel-banner />
-  <product-list></product-list>
   <product-list
     v-for="listItem in categoryList"
     :key="listItem"
     :category="listItem"
     :limit="4"
+    class="wrap"
   >
   </product-list>
 </template>
+
+<style scoped>
+.wrap {
+  position: relative;
+  top: 62px;
+  max-width: 1360px;
+  width: 100%;
+  margin: 0 auto;
+}
+</style>

@@ -45,19 +45,35 @@ const getProducts = async () => {};
 </script>
 
 <template>
-  <h2>{{ category }}</h2>
-  <div class="flex">
-    <product-item
-      v-for="product in products"
-      :key="product.id"
-      v-bind:product="product"
-    ></product-item>
+  <div class="wrap">
+    <h2 class="title">{{ category }}</h2>
+    <div class="flex">
+      <product-item
+        v-for="product in products"
+        :key="product.id"
+        v-bind:product="product"
+      ></product-item>
+    </div>
   </div>
 </template>
 
 <style scoped>
+.wrap {
+  /* max-width: 1360px;
+  width: 100%;
+  margin: 0 auto; */
+
+  /* overflow: hidden; */
+}
+.title {
+  text-align: center;
+}
 .flex {
+  max-width: 1360px;
+  width: 100%;
   display: flex;
   align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
 }
 </style>
