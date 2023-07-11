@@ -25,7 +25,7 @@ export default {
 <template>
   <div class="container">
     <div class="product-list">
-      <a class="product-item">
+      <a class="product-item" :href="`/product/${product.id}`">
         <figure class="product-card-wrap-image">
           <img :src="product.image" class="product-card-image" />
         </figure>
