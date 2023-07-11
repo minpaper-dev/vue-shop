@@ -7,15 +7,29 @@ export default {
   setup() {
     const route = useRoute();
 
-    let productId = ref(route.params.id);
     let productInfo = ref({});
     let isLoading = ref(true);
 
     const getProductInfo = async () => {
-      const response = await axios.get(`https://fakestoreapi.com/products/1`);
+      const response = await axios.get(
+        `https://fakestoreapi.com/products/${route.params.id}`
+      );
       console.log(response.data);
       productInfo.value = { ...response.data };
       isLoading.value = false;
+    };
+
+    const addToCart = (productInfo) => {
+      let cartStorage = JSON.parse(localStorage.getItem("CART_DATA")) || {};
+      if (Object.keys(cartStorage).includes(String(productInfo.id))) {
+        cartStorage[productInfo.id].count++;
+      } else {
+        cartStorage = {
+          ...cartStorage,
+          [productInfo.id]: { count: 1, productInfo },
+        };
+      }
+      localStorage.setItem("CART_DATA", JSON.stringify(cartStorage));
     };
 
     onMounted(() => {
@@ -23,9 +37,9 @@ export default {
     });
 
     return {
-      productId,
       productInfo,
       isLoading,
+      addToCart,
     };
   },
 };
@@ -43,7 +57,7 @@ export default {
           {{ productInfo.rating.rate }} / {{ productInfo.rating.count }} 참여
         </p>
         <p>${{ productInfo.price }}</p>
-        <button>장바구니에 담기</button>
+        <button @click="addToCart(productInfo)">장바구니에 담기</button>
         <button>장바구니로 이동</button>
       </div>
     </div>
