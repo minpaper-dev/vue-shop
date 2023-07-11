@@ -43,10 +43,7 @@ export default {
             type="text"
             placeholder="검색어를 입력해주세요"
           />
-          <a>
-            장바구니
-            <span></span>
-          </a>
+          <router-link :to="{ name: 'cart' }"> 장바구니 </router-link>
         </div>
       </div>
     </div>
