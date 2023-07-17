@@ -1,23 +1,22 @@
 <script>
-import { ref, reactive, onMounted } from "vue";
+import { computed } from "vue";
+import { useQuery } from "vue-query";
+import { useStore } from "vuex";
+
 import axios from "axios";
+
 import CarouselBanner from "./CarouselBanner.vue";
 import ProductList from "./ProductList.vue";
+import { ProductCategory } from "../common/constants.ts";
 
 export default {
   setup() {
-    let categoryList = ref([]);
-
-    onMounted(() => {
-      axios
-        .get(`https://fakestoreapi.com/products/categories`)
-        .then((result) => {
-          categoryList.value = [...categoryList.value, ...result.data];
-        });
-    });
+    const store = useStore();
+    const products = computed(() => store.state.allProducts);
 
     return {
-      categoryList,
+      ProductCategory,
+      products,
     };
   },
   components: { CarouselBanner, ProductList },
@@ -27,13 +26,14 @@ export default {
 <template>
   <carousel-banner />
   <product-list
-    v-for="listItem in categoryList"
-    :key="listItem"
-    :category="listItem"
-    :limit="4"
+    v-for="category in ProductCategory"
+    :key="category.cat"
+    :category="category.title"
+    :products="
+      products.filter((v) => category.list.includes(v.category)).slice(0, 4)
+    "
     class="wrap"
-  >
-  </product-list>
+  />
 </template>
 
 <style scoped>
@@ -43,5 +43,9 @@ export default {
   max-width: 1360px;
   width: 100%;
   margin: 0 auto;
+}
+
+.wrap:last-child {
+  padding-bottom: 100px;
 }
 </style>
