@@ -9,11 +9,12 @@ export default {
   components: { CustomButton },
   setup() {
     const store = useStore();
-    let isDark = ref(true);
+    let isDark = ref(localStorage.getItem("isDark") === "true" ? true : false);
 
     const changeTheme = () => {
       isDark.value = !isDark.value;
       store.commit("setIsDark", isDark.value);
+      localStorage.setItem("isDark", JSON.stringify(isDark.value));
     };
 
     const linkTo = (link) => {
@@ -24,7 +25,7 @@ export default {
       {
         id: 1,
         name: "패션",
-        link: "men",
+        link: "fashion",
       },
       {
         id: 2,
@@ -50,22 +51,22 @@ export default {
 </script>
 
 <template>
-  <div class="w-full fixed top-0 z-50 py-2 bg-headerBg dark:bg-headerBg-dark">
+  <div
+    class="w-full fixed top-0 z-50 py-3 bg-black dark:bg-white text-white dark:text-gray-300"
+  >
     <div class="max-w-7xl mx-auto flex items-center justify-between">
       <div class="flex items-center text-header dark:text-header-dark">
         <h1>
           <router-link to="/">Vue Shop</router-link>
         </h1>
         <div class="ml-8">
-          <CustomButton
-            v-for="category in categoryList"
-            class="text-header dark:text-header-dark"
-            :key="category.id"
-            :buttonEvent="() => linkTo(category.link)"
-            :buttonBgc="'transparent'"
-            :buttonHoverColor="'#fff'"
-            :buttonText="category.name"
-          />
+          <router-link :to="{ name: 'fashion' }" class="px-4">패션</router-link>
+          <router-link :to="{ name: 'jewelery' }" class="px-4"
+            >액세서리</router-link
+          >
+          <router-link :to="{ name: 'electronics' }" class="px-4"
+            >디지털</router-link
+          >
         </div>
       </div>
       <div class="flex items-center px-2">
@@ -78,7 +79,7 @@ export default {
         </button>
 
         <input
-          class="mx-3 p-2 rounded-sm bg-header"
+          class="mx-3 p-2 rounded-sm bg-header bg-gray-500 dark:bg-gray-700"
           type="text"
           placeholder="검색어를 입력해주세요"
         />
@@ -89,7 +90,7 @@ export default {
           <span class="relative">
             <i class="bx bx-shopping-bag bx-sm text-headerBg"></i>
             <span
-              class="inline-flex items-center justify-center absolute top-0 right-0 px-2 py-1 rounded-full bg-red-500 text-xs font-bold leading-none text-gray-200 transform translate-x-1/2 -translate-y-1/2"
+              class="inline-flex items-center justify-center absolute top-0 right-0 px-2 py-1 rounded-full bg-red text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2"
             >
               {{ store.state.count }}
             </span>

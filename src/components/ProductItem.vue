@@ -30,7 +30,9 @@ export default {
     <figure class="flex h-80 bg-white overflow-hidden">
       <img :src="product.image" class="transition-transform duration-300" />
     </figure>
-    <div class="card-body bg-gray-100 dark:bg-gray-700">
+    <div
+      class="card-body bg-gray-300 dark:bg-gray-900 text-gray-600 dark:text-gray-200"
+    >
       <p class="card-title text-base">{{ product.title }}</p>
       <p class="text-base">${{ product.price }}</p>
     </div>
@@ -50,7 +52,6 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: white;
 }
 
 .card figure img {
@@ -69,8 +70,6 @@ export default {
   flex-direction: column;
   padding: 2rem;
   gap: 0.5rem;
-  background-color: #374151;
-  color: #a6adba;
 }
 
 .card-title {
