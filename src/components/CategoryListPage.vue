@@ -1,6 +1,9 @@
 <script>
-import { watch, ref } from "vue";
+import { watch, ref, computed } from "vue";
+import { useRoute } from "vue-router";
+import { useStore } from "vuex";
 import ProductList from "./ProductList.vue";
+import { ProductCategory } from "../common/constants.ts";
 
 export default {
   components: { ProductList },
@@ -8,18 +11,27 @@ export default {
     category: String,
   },
   setup(props) {
-    let category = ref(props.category);
+    const route = useRoute();
+    const store = useStore();
 
-    watch(
-      () => props.category,
-      (newValue, oldValue) => {
-        console.log(newValue);
-        category.value = newValue;
-      }
+    let category = ref(route.path.slice(1));
+    let categoryInfo = ref(
+      ProductCategory.filter((v) => v.cat === category.value)
     );
+
+    watch(route, (newCategory, oldCategory) => {
+      category.value = newCategory.path.slice(1);
+      categoryInfo.value = ProductCategory.filter(
+        (v) => v.cat === category.value
+      );
+    });
+
+    const products = computed(() => store.state.allProducts);
 
     return {
       category,
+      products,
+      categoryInfo,
     };
   },
 };
@@ -27,8 +39,13 @@ export default {
 
 <template>
   <div class="wrap">
-    <h3>home > {{ category }}</h3>
-    <product-list v-bind:category="category"></product-list>
+    <h3>home > {{ categoryInfo[0].title }}</h3>
+    <product-list
+      v-bind:category="category"
+      :products="
+        products.filter((v) => categoryInfo[0].list.includes(v.category))
+      "
+    ></product-list>
   </div>
 </template>
 
