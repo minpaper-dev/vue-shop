@@ -51,10 +51,14 @@ export default {
             backgroundPosition: 'center',
           }"
         >
-          <div class="banner-text">
-            <h2>{{ bannerItem.title }}</h2>
-            <p>{{ bannerItem.description }}</p>
-            <button>바로가기</button>
+          <div class="banner-text text-white">
+            <h2 class="text-4xl">{{ bannerItem.title }}</h2>
+            <p class="text-base">{{ bannerItem.description }}</p>
+            <button
+              class="bg-black dark:bg-gray-400 text-gray-600 dark:text-white"
+            >
+              바로가기
+            </button>
           </div>
         </div>
       </slide>
@@ -86,6 +90,5 @@ export default {
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  color: #fff;
 }
 </style>
