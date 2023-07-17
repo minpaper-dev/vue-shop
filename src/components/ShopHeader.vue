@@ -1,107 +1,103 @@
 <script>
+import { computed, ref } from "vue";
 import { RouterLink } from "vue-router";
+import { useStore } from "vuex";
+import CustomButton from "./CustomButton.vue";
 
 export default {
   name: "ShopHeader",
-  data() {
+  components: { CustomButton },
+  setup() {
+    const store = useStore();
+    let isDark = ref(true);
+
+    const changeTheme = () => {
+      isDark.value = !isDark.value;
+      store.commit("setIsDark", isDark.value);
+    };
+
+    const linkTo = (link) => {
+      window.location.href = `/${link}`;
+    };
+
+    const categoryList = [
+      {
+        id: 1,
+        name: "패션",
+        link: "men",
+      },
+      {
+        id: 2,
+        name: "액세서리",
+        link: "jewelery",
+      },
+      {
+        id: 3,
+        name: "디지털",
+        link: "electronics",
+      },
+    ];
+
     return {
-      data: [],
+      categoryList,
+      linkTo,
+      store,
+      isDark,
+      changeTheme,
     };
   },
 };
 </script>
 
 <template>
-  <div class="container">
-    <div class="header">
-      <div class="header-inner">
-        <div class="header-text">
-          <h1 class="header-title">
-            <router-link to="/">Vue Shop</router-link>
-          </h1>
-          <div class="header-text-wrap">
-            <router-link :to="{ name: 'jewelery' }" class="header-text-item"
-              >jewelery</router-link
-            >
-            <router-link :to="{ name: 'electronics' }" class="header-text-item"
-              >electronics</router-link
-            >
-            <router-link :to="{ name: 'men' }" class="header-text-item"
-              >men's clothing</router-link
-            >
-            <router-link :to="{ name: 'women' }" class="header-text-item"
-              >women's clothing</router-link
-            >
-          </div>
-        </div>
-        <div class="header-icon">
-          <label>
-            <input type="checkbox" />
-          </label>
-          <input
-            class="header-input"
-            type="text"
-            placeholder="검색어를 입력해주세요"
+  <div class="w-full fixed top-0 z-50 py-2 bg-headerBg dark:bg-headerBg-dark">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <div class="flex items-center text-header dark:text-header-dark">
+        <h1>
+          <router-link to="/">Vue Shop</router-link>
+        </h1>
+        <div class="ml-8">
+          <CustomButton
+            v-for="category in categoryList"
+            class="text-header dark:text-header-dark"
+            :key="category.id"
+            :buttonEvent="() => linkTo(category.link)"
+            :buttonBgc="'transparent'"
+            :buttonHoverColor="'#fff'"
+            :buttonText="category.name"
           />
-          <router-link :to="{ name: 'cart' }"> 장바구니 </router-link>
         </div>
+      </div>
+      <div class="flex items-center px-2">
+        <button @click="changeTheme" class="flex items-center justify-center">
+          <i
+            v-if="store.state.isDark"
+            class="bx bx-moon bx-sm text-headerBg"
+          ></i>
+          <i v-else class="bx bx-sun bx-sm text-headerBg"></i>
+        </button>
+
+        <input
+          class="mx-3 p-2 rounded-sm bg-header"
+          type="text"
+          placeholder="검색어를 입력해주세요"
+        />
+        <router-link
+          class="btn btn-ghost w-10 sm:w-12 ml-1"
+          :to="{ name: 'cart' }"
+        >
+          <span class="relative">
+            <i class="bx bx-shopping-bag bx-sm text-headerBg"></i>
+            <span
+              class="inline-flex items-center justify-center absolute top-0 right-0 px-2 py-1 rounded-full bg-red-500 text-xs font-bold leading-none text-gray-200 transform translate-x-1/2 -translate-y-1/2"
+            >
+              {{ store.state.count }}
+            </span>
+          </span>
+        </router-link>
       </div>
     </div>
   </div>
 </template>
 
-<style scoped>
-.container {
-  width: 100%;
-  position: fixed;
-  top: 0px;
-  z-index: 9999;
-}
-.header {
-  background-color: rgb(25, 29, 36);
-
-  padding: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.header-inner {
-  max-width: 1360px;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.header-text {
-  display: flex;
-  align-items: center;
-}
-
-.header-title {
-  display: inline;
-  cursor: pointer;
-  margin: 0 8px;
-  font-size: 16px;
-  color: #fff;
-}
-
-.header-text-wrap {
-  margin-left: 8px;
-}
-
-.header-text-item {
-  padding: 0 12px;
-  font-size: 14px;
-  cursor: pointer;
-}
-
-.header-input {
-  height: 46px;
-  padding: 0px 16px;
-  border: 1px solid black;
-}
-
-a {
-  color: #fff;
-}
-</style>
+<style scoped></style>

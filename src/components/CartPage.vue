@@ -18,81 +18,79 @@ export default {
 </script>
 
 <template>
-  <div class="wrap">
-    <h3>홈 > 장바구니</h3>
-    <div class="flex justify-between">
-      <div>
-        <div
-          class="item"
-          v-for="cartItem in cartProduct"
-          :key="cartItem.productInfo.id"
-        >
-          <a>
-            <figure class="figure">
-              <img class="img" :src="cartItem.productInfo.image" />
-            </figure>
-          </a>
-
-          <div class="div">
-            <p>
-              {{ cartItem.productInfo.title }}
-            </p>
-            <p>${{ cartItem.productInfo.price }}</p>
-            <div>
-              <button>-</button>
-              <span>{{ cartItem.count }}</span>
-              <button>+</button>
+  <section class="main pt-16">
+    <section
+      class="pt-4 lg:pt-5 pb-4 lg:pb-8 px-4 xl:px-2 xl:container mx-auto"
+    >
+      <div class="text-sm breadcrumbs">홈 > 장바구니</div>
+      <div class="mt-6 md:mt-14 px-2 lg:px-0">
+        <div class="lg:flex justify-between mb-20">
+          <div>
+            <div
+              v-for="cartItem in cartProduct"
+              :key="cartItem.productInfo.id"
+              class="lg:flex lg:items-center mt-4 px-2 lg:px-0"
+            >
+              <a>
+                <figure
+                  class="w-56 min-w-full flex-shrink-0 rounded-2xl overflow-hidden px-4 py-4 bg-white"
+                >
+                  <img
+                    class="object-contain w-full h-48"
+                    :src="cartItem.productInfo.image"
+                    alt="상품 이미지"
+                  />
+                </figure>
+              </a>
+              <div class="card-body px-1 lg:px-12">
+                <h2 class="card-title">
+                  <a class="link link-hover">
+                    {{ cartItem.productInfo.title }}
+                  </a>
+                </h2>
+                <p class="mt-2 mb-4 text-3xl">
+                  ${{ cartItem.productInfo.price }}
+                </p>
+                <div class="card-actions">
+                  <div class="btn-group">
+                    <button class="btn btn-primary">-</button>
+                    <button class="btn btn-ghost no-animation">
+                      {{ cartItem.count }}
+                    </button>
+                    <button class="btn btn-primary">+</button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-          <br />
+          <div class="self-start shrink-0 flex items-center mt-10 mb-20">
+            <span class="text-xl md:text-2xl">총 --원</span>
+            <label
+              for="confirm-modal"
+              class="modal-button btn btn-primary ml-5"
+            >
+              구매하기
+            </label>
+          </div>
         </div>
       </div>
-      <div>
-        <span> 총 : $00 </span>
-        <button>구매하기</button>
-      </div>
-    </div>
-  </div>
+    </section>
+  </section>
 </template>
 
 <style scoped>
-.wrap {
-  position: relative;
-  top: 62px;
-  max-width: 1360px;
-  width: 100%;
-  margin: 0 auto;
+.main {
+  min-height: calc(100vh - 4rem - 224px);
 }
 
-.flex {
-  display: flex;
+.breadcrumbs {
+  max-width: 100%;
+  overflow-x: auto;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
 }
 
-.justify-between {
-  justify-content: space-between;
-}
-
-.item {
-  display: flex;
-  margin-top: 10px;
-}
-
-.figure {
-  width: 224px;
-  height: 224px;
-  background-color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 8px;
-}
-
-.img {
-  width: 192px;
-  height: 192px;
-}
-
-.div {
-  padding: 32px 48px;
+figure {
+  background-color: white;
 }
 </style>

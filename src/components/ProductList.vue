@@ -1,5 +1,5 @@
 <script>
-import { onMounted, ref, watch } from "vue";
+import { onMounted, ref, watch, computed } from "vue";
 import axios from "axios";
 import ProductItem from "./ProductItem.vue";
 
@@ -24,7 +24,6 @@ export default {
           products.value = [...result.data];
         });
     };
-
     onMounted(() => {
       getProduct(props.category);
     });
@@ -45,35 +44,20 @@ const getProducts = async () => {};
 </script>
 
 <template>
-  <div class="wrap">
-    <h2 class="title">{{ category }}</h2>
-    <div class="flex">
+  <section
+    class="pt-6 lg:pt-12 pb-4 lg:pb-8 px-4 xl:px-2 mt-10 xl:container mx-auto"
+  >
+    <h2 class="mb-5 lg:mb-8 text-3xl lg:text-4xl text-center font-bold">
+      {{ category }}
+    </h2>
+    <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-4 item_list">
       <product-item
         v-for="product in products"
         :key="product.id"
         v-bind:product="product"
       ></product-item>
     </div>
-  </div>
+  </section>
 </template>
 
-<style scoped>
-.wrap {
-  /* max-width: 1360px;
-  width: 100%;
-  margin: 0 auto; */
-
-  /* overflow: hidden; */
-}
-.title {
-  text-align: center;
-}
-.flex {
-  max-width: 1360px;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  flex-wrap: wrap;
-}
-</style>
+<style scoped></style>

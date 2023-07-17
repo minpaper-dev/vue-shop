@@ -23,78 +23,62 @@ export default {
 </script>
 
 <template>
-  <div class="container">
-    <div class="product-list">
-      <a class="product-item" :href="`/product/${product.id}`">
-        <figure class="product-card-wrap-image">
-          <img :src="product.image" class="product-card-image" />
-        </figure>
-        <div class="product-card-description">
-          <span>{{ product.title }}</span>
-          <p>${{ product.price }}</p>
-        </div>
-      </a>
+  <a
+    class="card card-bordered border-gray-200 dark:border-gray-800 card-compact lg:card-normal"
+    :href="`/product/${product.id}`"
+  >
+    <figure class="flex h-80 bg-white overflow-hidden">
+      <img :src="product.image" class="transition-transform duration-300" />
+    </figure>
+    <div class="card-body bg-gray-100 dark:bg-gray-700">
+      <p class="card-title text-base">{{ product.title }}</p>
+      <p class="text-base">${{ product.price }}</p>
     </div>
-  </div>
+  </a>
 </template>
 
 <style scoped>
-h2 {
-  margin-bottom: 32px;
-  color: #fff;
-}
-.container {
+.card {
+  position: relative;
   display: flex;
   flex-direction: column;
-  align-items: center;
-
-  padding: 48px 8px 32px;
-}
-.product-card-wrap-image {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #fff;
-}
-.product-card-image {
-  width: 100px;
-  height: 100px;
-}
-.product-item {
-  max-width: 316px;
-  width: 316px;
-  height: 468px;
   overflow: hidden;
-  border-radius: 16px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-.product-card {
-}
-.product-list {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.product-card-description {
-  width: 100%;
-  min-height: 180px;
-  color: #fff;
-  background-color: #394150;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  padding: 32px;
+  border-radius: 1rem;
 }
 
-.product-card-description span {
-  margin-bottom: 20px;
+.card figure {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+}
+
+.card figure img {
+  max-width: 50%;
+  max-height: 50%;
+}
+
+.card:hover figure img {
+  transform: scale(1.2);
+  transition-duration: 0.3s;
+}
+
+.card-body {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  padding: 2rem;
+  gap: 0.5rem;
+  background-color: #374151;
+  color: #a6adba;
+}
+
+.card-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  font-weight: 600;
 }
 </style>

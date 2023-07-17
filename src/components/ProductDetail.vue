@@ -46,25 +46,72 @@ export default {
 </script>
 
 <template>
-  <div class="wrap" v-if="!isLoading">
-    <h3>{{ productInfo.category }} > {{ productInfo.title }}</h3>
-    <div class="product">
-      <img :src="productInfo.image" />
-      <div>
-        <p>{{ productInfo.title }}</p>
-        <p>{{ productInfo.description }}</p>
-        <p>
-          {{ productInfo.rating.rate }} / {{ productInfo.rating.count }} 참여
-        </p>
-        <p>${{ productInfo.price }}</p>
-        <button @click="addToCart(productInfo)">장바구니에 담기</button>
-        <button>장바구니로 이동</button>
+  <section class="main pt-16" v-if="!isLoading">
+    <section
+      class="pt-4 lg:pt-5 pb-4 lg:pb-8 px-4 xl:px-2 xl:container mx-auto"
+    >
+      <p class="text-sm breadcrumbs">
+        {{ productInfo.category }} > {{ productInfo.title }}
+      </p>
+      <div class="lg:flex lg:items-center mt-6 md:mt-14 px-2 lg:px-0">
+        <figure
+          class="flex-shrink-0 rounded-2xl overflow-hidden px-4 py-4 bg-white"
+        >
+          <img class="object-contain w-full h-72" :src="productInfo.image" />
+        </figure>
+        <div class="card-body px-1 lg:px-12">
+          <h2 class="card-title">{{ productInfo.title }}</h2>
+          <p>{{ productInfo.description }}</p>
+          <div class="flex items-center mt-3">
+            <p class="ml-2">
+              {{ productInfo.rating.rate }} /
+              {{ productInfo.rating.count }} 참여
+            </p>
+          </div>
+
+          <p class="mt-2 mb-4 text-3xl">${{ productInfo.price }}</p>
+          <div class="card-actions">
+            <button @click="addToCart(productInfo)">장바구니에 담기</button>
+            <button>장바구니로 이동</button>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
+    </section>
+  </section>
 </template>
 
 <style scoped>
+.main {
+  min-height: calc(100vh - 4rem - 224px);
+}
+.breadcrumbs {
+  max-width: 100%;
+  overflow-x: auto;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+figure {
+  min-width: 20em;
+  background-color: white;
+}
+
+.card-body {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  padding: 2rem;
+  gap: 0.5rem;
+}
+
+.card-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  font-weight: 600;
+}
 .wrap {
   position: relative;
   top: 62px;
