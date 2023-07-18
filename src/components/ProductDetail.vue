@@ -22,7 +22,7 @@ export default {
       } else {
         cartStorage = {
           ...cartStorage,
-          [productInfo.id]: { count: 1, productInfo },
+          [productInfo.id]: { count: 1, id: productInfo.id },
         };
       }
       localStorage.setItem("CART_DATA", JSON.stringify(cartStorage));

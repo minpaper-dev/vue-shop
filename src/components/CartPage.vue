@@ -1,17 +1,77 @@
 <script>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, computed } from "vue";
+import { useStore } from "vuex";
+
+import PaymentModal from "./PaymentModal.vue";
+
 export default {
+  components: { PaymentModal },
   setup() {
+    const store = useStore();
+    const allProduct = computed(() => store.state.allProducts);
+    let localCart = ref({});
+    let totalPrice = ref(0);
+    let isModalOpen = ref(false);
+
     let cartProduct = ref(null);
 
+    const plusCount = (id) => {
+      store.commit("increment");
+      localCart.value[id].count++;
+      localStorage.setItem("CART_DATA", JSON.stringify(localCart.value));
+      calcTotal();
+    };
+
+    const minusCount = (id) => {
+      store.commit("decrement");
+      localCart.value[id].count--;
+      localStorage.setItem("CART_DATA", JSON.stringify(localCart.value));
+      calcTotal();
+    };
+
+    const setModalOpen = () => {
+      isModalOpen.value = true;
+    };
+
+    const setModalClose = () => {
+      isModalOpen.value = false;
+    };
+
+    const deleteCart = () => {
+      localStorage.removeItem("CART_DATA");
+      isModalOpen.value = false;
+      cartProduct.value = [];
+      calcTotal();
+    };
+
     onMounted(() => {
-      cartProduct.value = Object.values(
-        JSON.parse(localStorage.getItem("CART_DATA")) || {}
+      localCart.value = JSON.parse(localStorage.getItem("CART_DATA")) || [];
+
+      cartProduct.value = allProduct.value.filter((v) =>
+        Object.keys(localCart.value).includes(v.id + "")
       );
+
+      calcTotal();
     });
+
+    const calcTotal = () => {
+      totalPrice.value = 0;
+      cartProduct.value.map(
+        (v) =>
+          (totalPrice.value += v.price.toFixed() * localCart.value[v.id].count)
+      );
+    };
 
     return {
       cartProduct,
+      localCart,
+      totalPrice,
+      plusCount,
+      minusCount,
+      isModalOpen,
+      setModalOpen,
+      setModalClose,
+      deleteCart,
     };
   },
 };
@@ -28,7 +88,7 @@ export default {
           <div>
             <div
               v-for="cartItem in cartProduct"
-              :key="cartItem.productInfo.id"
+              :key="cartItem.id"
               class="lg:flex lg:items-center mt-4 px-2 lg:px-0"
             >
               <a>
@@ -37,7 +97,7 @@ export default {
                 >
                   <img
                     class="object-contain w-full h-48"
-                    :src="cartItem.productInfo.image"
+                    :src="cartItem.image"
                     alt="상품 이미지"
                   />
                 </figure>
@@ -45,29 +105,40 @@ export default {
               <div class="card-body px-1 lg:px-12">
                 <h2 class="card-title">
                   <a class="link link-hover">
-                    {{ cartItem.productInfo.title }}
+                    {{ cartItem.title }}
                   </a>
                 </h2>
                 <p class="mt-2 mb-4 text-3xl">
-                  ${{ cartItem.productInfo.price }}
+                  ${{ cartItem.price.toFixed() * localCart[cartItem.id].count }}
                 </p>
                 <div class="card-actions">
                   <div class="btn-group">
-                    <button class="btn btn-primary">-</button>
-                    <button class="btn btn-ghost no-animation">
-                      {{ cartItem.count }}
+                    <button
+                      @click="minusCount(cartItem.id)"
+                      class="btn btn-primary"
+                    >
+                      -
                     </button>
-                    <button class="btn btn-primary">+</button>
+                    <button class="btn btn-ghost no-animation">
+                      {{ localCart[cartItem.id].count }}
+                    </button>
+                    <button
+                      @click="plusCount(cartItem.id)"
+                      class="btn btn-primary"
+                    >
+                      +
+                    </button>
                   </div>
                 </div>
               </div>
             </div>
           </div>
           <div class="self-start shrink-0 flex items-center mt-10 mb-20">
-            <span class="text-xl md:text-2xl">총 --원</span>
+            <span class="text-xl md:text-2xl">총 ${{ totalPrice }}</span>
             <label
               for="confirm-modal"
               class="modal-button btn btn-primary ml-5"
+              @click="setModalOpen"
             >
               구매하기
             </label>
@@ -76,6 +147,11 @@ export default {
       </div>
     </section>
   </section>
+  <PaymentModal
+    v-if="isModalOpen"
+    @close-modal="setModalClose"
+    @delete-cart="deleteCart"
+  />
 </template>
 
 <style scoped>
