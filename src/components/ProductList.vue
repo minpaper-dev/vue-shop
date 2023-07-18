@@ -1,21 +1,11 @@
-<script>
-import { onMounted, ref, watch, computed } from "vue";
-import axios from "axios";
+<script lang="ts" setup>
 import ProductItem from "./ProductItem.vue";
+import { Product } from "../common/types";
 
-export default {
-  props: {
-    category: String,
-    products: Array,
-    limit: {
-      type: Number,
-      default: 0,
-    },
-  },
-  components: { ProductItem },
-};
-
-const getProducts = async () => {};
+const { category, products } = defineProps({
+  category: String,
+  products: Object as () => Product[],
+});
 </script>
 
 <template>

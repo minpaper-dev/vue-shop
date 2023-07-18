@@ -1,28 +1,33 @@
-<script>
-import { onMounted, ref, computed } from "vue";
+<script lang="ts">
+import { onMounted, ref, computed, Ref } from "vue";
 import { useStore } from "vuex";
 
 import PaymentModal from "../components/PaymentModal.vue";
+import { Product } from "../common/types";
+
+interface CartItem {
+  count: number;
+}
 
 export default {
   components: { PaymentModal },
   setup() {
     const store = useStore();
     const allProduct = computed(() => store.state.allProducts);
-    let localCart = ref({});
-    let totalPrice = ref(0);
-    let isModalOpen = ref(false);
+    const localCart: Ref<{ [id: string]: CartItem }> = ref({});
+    const totalPrice = ref(0);
+    const isModalOpen = ref(false);
 
-    let cartProduct = ref([]);
+    const cartProduct = ref<Product[]>([]);
 
-    const plusCount = (id) => {
+    const plusCount = (id: string) => {
       store.commit("increment");
       localCart.value[id].count++;
       localStorage.setItem("CART_DATA", JSON.stringify(localCart.value));
       calcTotal();
     };
 
-    const minusCount = (id) => {
+    const minusCount = (id: string) => {
       store.commit("decrement");
       localCart.value[id].count--;
       localStorage.setItem("CART_DATA", JSON.stringify(localCart.value));
@@ -46,10 +51,10 @@ export default {
     };
 
     onMounted(() => {
-      localCart.value = JSON.parse(localStorage.getItem("CART_DATA")) || [];
+      localCart.value = JSON.parse(localStorage.getItem("CART_DATA") || "");
 
-      cartProduct.value = allProduct.value.filter((v) =>
-        Object.keys(localCart.value).includes(v.id + "")
+      cartProduct.value = allProduct.value.filter((v: Product) =>
+        Object.keys(localCart.value).includes(v.id.toString())
       );
 
       calcTotal();
@@ -57,10 +62,9 @@ export default {
 
     const calcTotal = () => {
       totalPrice.value = 0;
-      cartProduct.value.map(
-        (v) =>
-          (totalPrice.value += v.price.toFixed() * localCart.value[v.id].count)
-      );
+      cartProduct.value.forEach((v: Product) => {
+        totalPrice.value += Math.round(v.price) * localCart.value[v.id].count;
+      });
     };
 
     return {
@@ -115,12 +119,14 @@ export default {
                   </a>
                 </h2>
                 <p class="mt-2 mb-4 text-3xl">
-                  ${{ cartItem.price.toFixed() * localCart[cartItem.id].count }}
+                  ${{
+                    Math.round(cartItem.price) * localCart[cartItem.id].count
+                  }}
                 </p>
                 <div class="card-actions">
                   <div class="btn-group">
                     <button
-                      @click="minusCount(cartItem.id)"
+                      @click="minusCount(String(cartItem.id))"
                       class="btn btn-primary"
                     >
                       -
@@ -129,7 +135,7 @@ export default {
                       {{ localCart[cartItem.id].count }}
                     </button>
                     <button
-                      @click="plusCount(cartItem.id)"
+                      @click="plusCount(String(cartItem.id))"
                       class="btn btn-primary"
                     >
                       +

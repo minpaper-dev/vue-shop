@@ -1,22 +1,27 @@
-<script>
-import { ref, onMounted, computed } from "vue";
+<script lang="ts">
+import { computed, defineComponent } from "vue";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
-import axios from "axios";
-export default {
+import { Product } from "../common/types"; // 타입 임포트
+
+export default defineComponent({
   name: "ProductDetail",
   setup() {
     const route = useRoute();
     const store = useStore();
 
     const allProduct = computed(() => store.state.allProducts);
-    const productInfo = allProduct.value.find(
-      (product) => product.id == route.params.id
+    const productInfo = computed<Product>(() =>
+      allProduct.value.find(
+        (product: Product) => String(product.id) == route.params.id
+      )
     );
 
-    const addToCart = (productInfo) => {
+    const addToCart = (productInfo: Product) => {
       store.commit("increment");
-      let cartStorage = JSON.parse(localStorage.getItem("CART_DATA")) || {};
+      let cartStorage: { [key: string]: { count: number; id: number } } =
+        JSON.parse(localStorage.getItem("CART_DATA") || "") || {};
+
       if (Object.keys(cartStorage).includes(String(productInfo.id))) {
         cartStorage[productInfo.id].count++;
       } else {
@@ -34,7 +39,7 @@ export default {
       productInfo,
     };
   },
-};
+});
 </script>
 
 <template>

@@ -1,12 +1,13 @@
-<script>
-import { onMounted, ref, computed } from "vue";
+<script lang="ts">
+import { onMounted, ref } from "vue";
 import { useStore } from "vuex";
 import { useQuery } from "vue-query";
-
 import axios from "axios";
+import { AxiosResponse } from "axios";
 
 import ShopHeader from "./components/ShopHeader.vue";
 import ShopFooter from "./components/ShopFooter.vue";
+import { Product } from "./common/types";
 
 export default {
   name: "App",
@@ -17,11 +18,13 @@ export default {
   setup() {
     const store = useStore();
 
-    let theme = ref(null);
-    let cartCount = ref(0);
+    const theme = ref<string | null>(null);
+    const cartCount = ref(0);
 
-    const { data, isLoading, error } = useQuery("products", async () => {
-      const response = await axios.get("https://fakestoreapi.com/products");
+    const { isLoading } = useQuery<Product[], Error>("products", async () => {
+      const response: AxiosResponse<Product[]> = await axios.get(
+        "https://fakestoreapi.com/products"
+      );
       store.commit("setProducts", response.data);
       return response.data;
     });
@@ -32,8 +35,8 @@ export default {
       store.commit("setIsDark", theme.value === "true");
 
       // 장바구니 설정
-      let cart = JSON.parse(localStorage.getItem("CART_DATA")) || {};
-      Object.values(cart).map((v) => (cartCount.value += v.count));
+      const cart = JSON.parse(localStorage.getItem("CART_DATA") || "");
+      Object.values(cart).map((v: any) => (cartCount.value += v.count));
       store.commit("increment", cartCount.value);
     });
 

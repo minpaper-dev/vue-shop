@@ -1,43 +1,37 @@
-<script>
-// If you are using PurgeCSS, make sure to whitelist the carousel CSS classes
+<script lang="ts" setup>
 import "vue3-carousel/dist/carousel.css";
-import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
+import { Carousel, Slide, Pagination } from "vue3-carousel";
 import digitalImage from "../assets/images/img_shop_digital.jpeg";
 import fasionImage from "../assets/images/img_shop_fashion.jpeg";
 import groceryImage from "../assets/images/img_shop_grocery.jpeg";
 
-export default {
-  name: "CarouselBanner",
-  components: {
-    Carousel,
-    Slide,
-    Pagination,
+interface BannerItem {
+  title: string;
+  description: string;
+  image: string;
+  category: string;
+}
+
+const bannerList: BannerItem[] = [
+  {
+    title: "물빠진 청바지!",
+    description: "이제 막 도착한 패션 청바지를 구경해보세요.",
+    image: fasionImage,
+    category: "fasion",
   },
-  data() {
-    return {
-      bannerList: [
-        {
-          title: "물빠진 청바지!",
-          description: "이제 막 도착한 패션 청바지를 구경해보세요.",
-          image: fasionImage,
-          category: "fasion",
-        },
-        {
-          title: "신속한 업무처리!",
-          description: "다양한 디지털 상품을 둘러보세요.",
-          image: digitalImage,
-          category: "digital",
-        },
-        {
-          title: "신선한 식품!",
-          description: "농장 직배송으로 더욱 신선한 식료품을 만나보세요.",
-          image: groceryImage,
-          category: "grocery",
-        },
-      ],
-    };
+  {
+    title: "신속한 업무처리!",
+    description: "다양한 디지털 상품을 둘러보세요.",
+    image: digitalImage,
+    category: "digital",
   },
-};
+  {
+    title: "신선한 식품!",
+    description: "농장 직배송으로 더욱 신선한 식료품을 만나보세요.",
+    image: groceryImage,
+    category: "grocery",
+  },
+];
 </script>
 
 <template>

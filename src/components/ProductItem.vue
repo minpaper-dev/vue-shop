@@ -1,40 +1,26 @@
-<script>
-import { watch, ref } from "vue";
+<script lang="ts" setup>
+import { Product } from "../common/types";
 
-export default {
-  props: {
-    product: Object,
+const { product } = defineProps({
+  product: {
+    type: Object as () => Product,
   },
-  setup(props) {
-    let product = ref(props.product);
-
-    watch(
-      () => props.product,
-      (newValue, oldValue) => {
-        product = newValue;
-      }
-    );
-
-    return {
-      product,
-    };
-  },
-};
+});
 </script>
 
 <template>
   <a
     class="card card-bordered border-gray-200 dark:border-gray-800 card-compact lg:card-normal"
-    :href="`/product/${product.id}`"
+    :href="`/product/${product?.id}`"
   >
     <figure class="flex h-80 bg-white overflow-hidden">
-      <img :src="product.image" class="transition-transform duration-300" />
+      <img :src="product?.image" class="transition-transform duration-300" />
     </figure>
     <div
       class="card-body bg-gray-900 dark:bg-gray-300 text-gray-200 dark:text-gray-600"
     >
-      <p class="card-title text-base">{{ product.title }}</p>
-      <p class="text-base">${{ product.price }}</p>
+      <p class="card-title text-base">{{ product?.title }}</p>
+      <p class="text-base">${{ product?.price }}</p>
     </div>
   </a>
 </template>

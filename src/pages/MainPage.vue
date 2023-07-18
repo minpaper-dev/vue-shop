@@ -1,13 +1,11 @@
-<script>
+<script lang="ts">
 import { computed } from "vue";
-import { useQuery } from "vue-query";
 import { useStore } from "vuex";
-
-import axios from "axios";
 
 import CarouselBanner from "../components/CarouselBanner.vue";
 import ProductList from "../components/ProductList.vue";
 import { ProductCategory } from "../common/constants.ts";
+import { Product } from "../common/types";
 
 export default {
   setup() {
@@ -30,7 +28,7 @@ export default {
     :key="category.cat"
     :category="category.title"
     :products="
-      products.filter((v) => category.list.includes(v.category)).slice(0, 4)
+      products.filter((v : Product) => category.list.includes(v.category)).slice(0, 4)
     "
   />
 </template>

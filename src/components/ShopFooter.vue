@@ -1,8 +1,4 @@
-<script>
-export default {
-  name: "ShopFooter",
-};
-</script>
+<script lang="ts" setup></script>
 
 <template>
   <div

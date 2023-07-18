@@ -1,16 +1,23 @@
-<script>
-import { computed, ref } from "vue";
+<script lang="ts">
+import { computed, ref, Ref } from "vue";
 import { RouterLink } from "vue-router";
 import { useStore } from "vuex";
+import { Product } from "../common/types";
+
+interface Category {
+  id: number;
+  name: string;
+  link: string;
+}
 
 export default {
   name: "ShopHeader",
   setup() {
     const store = useStore();
     const products = computed(() => store.state.allProducts);
-    let isDark = ref(localStorage.getItem("isDark") === "true" ? true : false);
-    let inputData = ref("");
-    let searchList = ref([]);
+    const isDark = ref(localStorage.getItem("isDark") === "true");
+    const inputData = ref("");
+    const searchList: Ref<Product[]> = ref([]);
     let isFocus = ref(false);
 
     const changeTheme = () => {
@@ -19,19 +26,24 @@ export default {
       localStorage.setItem("isDark", JSON.stringify(isDark.value));
     };
 
-    const linkTo = (link) => {
+    const linkTo = (link: string) => {
       window.location.href = `/${link}`;
     };
 
-    const changeText = (e) => {
-      inputData.value = e.target.value;
-      searchList.value = products.value.filter((v) =>
-        v.title.toUpperCase().includes(e.target.value.toUpperCase())
+    const changeText = (event: any) => {
+      inputData.value = event.target.value;
+      searchList.value = products.value.filter((v: Product) =>
+        v.title.toUpperCase().includes(event.target.value.toUpperCase())
       );
-      console.log(searchList.value);
     };
 
-    const categoryList = [
+    const setIsBlur = () => {
+      setTimeout(() => {
+        isFocus.value = false;
+      }, 200);
+    };
+
+    const categoryList: Category[] = [
       {
         id: 1,
         name: "패션",
@@ -59,6 +71,7 @@ export default {
       searchList,
       changeText,
       isFocus,
+      setIsBlur,
     };
   },
 };
@@ -96,12 +109,7 @@ export default {
             :value="inputData"
             @input="changeText"
             @focus="() => (isFocus = true)"
-            @blur="
-              () =>
-                setTimeout(() => {
-                  isFocus = false;
-                }, 200)
-            "
+            @blur="setIsBlur"
           />
           <ul
             v-if="searchList.length && inputData.length && isFocus"
