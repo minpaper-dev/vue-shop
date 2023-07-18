@@ -9,7 +9,11 @@ export default {
   components: { CustomButton },
   setup() {
     const store = useStore();
+    const products = computed(() => store.state.allProducts);
     let isDark = ref(localStorage.getItem("isDark") === "true" ? true : false);
+    let inputData = ref("");
+    let searchList = ref([]);
+    let isFocus = ref(false);
 
     const changeTheme = () => {
       isDark.value = !isDark.value;
@@ -19,6 +23,14 @@ export default {
 
     const linkTo = (link) => {
       window.location.href = `/${link}`;
+    };
+
+    const changeText = (e) => {
+      inputData.value = e.target.value;
+      searchList.value = products.value.filter((v) =>
+        v.title.toUpperCase().includes(e.target.value.toUpperCase())
+      );
+      console.log(searchList.value);
     };
 
     const categoryList = [
@@ -45,6 +57,10 @@ export default {
       store,
       isDark,
       changeTheme,
+      inputData,
+      searchList,
+      changeText,
+      isFocus,
     };
   },
 };
@@ -77,12 +93,36 @@ export default {
           ></i>
           <i v-else class="bx bx-sun bx-sm text-headerBg"></i>
         </button>
-
-        <input
-          class="mx-3 p-2 rounded-sm bg-header bg-gray-500 dark:bg-gray-700"
-          type="text"
-          placeholder="검색어를 입력해주세요"
-        />
+        <div class="relative mx-3">
+          <input
+            class="p-2 rounded-sm bg-header bg-gray-500 dark:bg-gray-700 focus:outline-none"
+            type="text"
+            placeholder="검색어를 입력해주세요"
+            :value="inputData"
+            @input="changeText"
+            @focus="() => (isFocus = true)"
+            @blur="
+              () =>
+                setTimeout(() => {
+                  isFocus = false;
+                }, 200)
+            "
+          />
+          <ul
+            v-if="searchList.length && inputData.length && isFocus"
+            class="absolute w-64 top-14 left-0 max-h-96 bg-white dark:bg-gray-500 text-black dark:text-white overflow-y-auto"
+          >
+            <li
+              v-for="item in searchList"
+              :key="item.id"
+              class="p-3 hover:bg-gray-600"
+            >
+              <a :href="`/product/${item.id}`" @click="(e) => console.log(e)">
+                <span> {{ item.title }} </span>
+              </a>
+            </li>
+          </ul>
+        </div>
         <router-link
           class="btn btn-ghost w-10 sm:w-12 ml-1"
           :to="{ name: 'cart' }"
@@ -101,4 +141,23 @@ export default {
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+ul {
+  --tw-scale-x: 0.95;
+  --tw-scale-y: 0.95;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y))
+    rotate(var(--tw-rotate)) skew(var(--tw-skew-x)) skewY(var(--tw-skew-y))
+    scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+  transition-property: color, background-color, border-color, fill, stroke,
+    opacity, box-shadow, transform, filter, -webkit-text-decoration-color,
+    -webkit-backdrop-filter;
+  transition-property: color, background-color, border-color,
+    text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter,
+    backdrop-filter;
+  transition-property: color, background-color, border-color,
+    text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter,
+    backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;
+  transition-duration: 0.2s;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+</style>
