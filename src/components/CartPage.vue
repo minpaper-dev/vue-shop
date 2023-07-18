@@ -13,7 +13,7 @@ export default {
     let totalPrice = ref(0);
     let isModalOpen = ref(false);
 
-    let cartProduct = ref(null);
+    let cartProduct = ref([]);
 
     const plusCount = (id) => {
       store.commit("increment");
@@ -42,6 +42,7 @@ export default {
       isModalOpen.value = false;
       cartProduct.value = [];
       calcTotal();
+      store.commit("setCartEmpty");
     };
 
     onMounted(() => {
@@ -78,12 +79,15 @@ export default {
 </script>
 
 <template>
-  <section class="main pt-16">
+  <section class="main">
     <section
       class="pt-4 lg:pt-5 pb-4 lg:pb-8 px-4 xl:px-2 xl:container mx-auto"
     >
-      <div class="text-sm breadcrumbs">홈 > 장바구니</div>
-      <div class="mt-6 md:mt-14 px-2 lg:px-0">
+      <div class="text-sm breadcrumbs text-gray-200 dark:text-gray-600">
+        홈 > 장바구니
+      </div>
+
+      <div v-if="cartProduct.length > 0" class="mt-6 md:mt-14 px-2 lg:px-0">
         <div class="lg:flex justify-between mb-20">
           <div>
             <div
@@ -102,7 +106,9 @@ export default {
                   />
                 </figure>
               </a>
-              <div class="card-body px-1 lg:px-12">
+              <div
+                class="card-body px-1 lg:px-12 text-black dark:text-gray-600"
+              >
                 <h2 class="card-title">
                   <a class="link link-hover">
                     {{ cartItem.title }}
@@ -133,7 +139,9 @@ export default {
               </div>
             </div>
           </div>
-          <div class="self-start shrink-0 flex items-center mt-10 mb-20">
+          <div
+            class="self-start shrink-0 flex items-center mt-10 mb-20 text-gray-200 dark:text-gray-600"
+          >
             <span class="text-xl md:text-2xl">총 ${{ totalPrice }}</span>
             <label
               for="confirm-modal"
@@ -145,6 +153,7 @@ export default {
           </div>
         </div>
       </div>
+      <div v-else>장바구니가 비었습니다.</div>
     </section>
   </section>
   <PaymentModal
