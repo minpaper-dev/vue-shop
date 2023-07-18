@@ -2,7 +2,7 @@
 import { onMounted, ref, computed } from "vue";
 import { useStore } from "vuex";
 
-import PaymentModal from "./PaymentModal.vue";
+import PaymentModal from "../components/PaymentModal.vue";
 
 export default {
   components: { PaymentModal },

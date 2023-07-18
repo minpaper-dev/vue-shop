@@ -2,11 +2,7 @@
 import { useRouter } from "vue-router";
 
 export default {
-  computed: {
-    fontColor() {
-      return "var(--primary-text)";
-    },
-  },
+  computed: {},
   setup() {
     const router = useRouter();
     const goToMain = () => {
@@ -33,6 +29,4 @@ export default {
   </div>
 </template>
 
-<style scoped>
-@import url(../assets/styles/main.css);
-</style>
+<style scoped></style>

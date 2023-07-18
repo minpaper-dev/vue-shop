@@ -2,7 +2,7 @@
 import { watch, ref, computed } from "vue";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
-import ProductList from "./ProductList.vue";
+import ProductList from "../components/ProductList.vue";
 import { ProductCategory } from "../common/constants.ts";
 
 export default {

@@ -5,8 +5,8 @@ import { useStore } from "vuex";
 
 import axios from "axios";
 
-import CarouselBanner from "./CarouselBanner.vue";
-import ProductList from "./ProductList.vue";
+import CarouselBanner from "../components/CarouselBanner.vue";
+import ProductList from "../components/ProductList.vue";
 import { ProductCategory } from "../common/constants.ts";
 
 export default {
