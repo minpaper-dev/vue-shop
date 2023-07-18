@@ -50,7 +50,7 @@ export default {
   <div :class="{ dark: store.state.isDark }" class="relative">
     <shop-header />
     <hr />
-    <div v-if="!isLoading" class="bg-[#2b303b] dark:bg-white pb-62">
+    <div v-if="!isLoading" class="bg-white dark:bg-[#2b303b] py-16">
       <router-view />
     </div>
     <shop-footer />

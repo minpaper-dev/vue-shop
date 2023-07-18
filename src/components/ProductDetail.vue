@@ -112,13 +112,7 @@ figure {
   line-height: 1.75rem;
   font-weight: 600;
 }
-.wrap {
-  position: relative;
-  top: 62px;
-  max-width: 1062px;
-  width: 100%;
-  margin: 0 auto;
-}
+
 .product {
   display: flex;
   align-items: center;

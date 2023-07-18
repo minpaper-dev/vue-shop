@@ -38,8 +38,12 @@ export default {
 </script>
 
 <template>
-  <div class="wrap">
-    <h3>home > {{ categoryInfo[0].title }}</h3>
+  <div
+    class="pt-4 lg:pt-5 pb-4 lg:pb-8 px-4 xl:px-2 xl:container mx-auto top-62"
+  >
+    <h3 class="text-gray-200 dark:text-gray-600">
+      home > {{ categoryInfo[0].title }}
+    </h3>
     <product-list
       v-bind:category="category"
       :products="
@@ -49,13 +53,4 @@ export default {
   </div>
 </template>
 
-<style scoped>
-.wrap {
-  position: relative;
-  top: 62px;
-  max-width: 1360px;
-  width: 100%;
-  margin: 0 auto;
-  padding-bottom: 62px;
-}
-</style>
+<style scoped></style>

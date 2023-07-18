@@ -23,7 +23,7 @@ const getProducts = async () => {};
     class="pt-6 lg:pt-12 pb-4 lg:pb-8 px-4 xl:px-2 mt-10 xl:container mx-auto"
   >
     <h2
-      class="mb-5 lg:mb-8 text-3xl lg:text-4xl text-center font-bold text-gray-600 dark:text-gray-200"
+      class="mb-5 lg:mb-8 text-3xl lg:text-4xl text-center font-bold text-gray-200 dark:text-gray-600"
     >
       {{ category }}
     </h2>

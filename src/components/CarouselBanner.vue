@@ -54,11 +54,7 @@ export default {
           <div class="banner-text text-white">
             <h2 class="text-4xl">{{ bannerItem.title }}</h2>
             <p class="text-base">{{ bannerItem.description }}</p>
-            <button
-              class="bg-black dark:bg-gray-400 text-gray-600 dark:text-white"
-            >
-              바로가기
-            </button>
+            <button class="bg-black text-white">바로가기</button>
           </div>
         </div>
       </slide>
@@ -72,7 +68,6 @@ export default {
 <style scoped>
 .wrap-carousel {
   position: relative;
-  top: 62px;
 }
 
 .banner-item {

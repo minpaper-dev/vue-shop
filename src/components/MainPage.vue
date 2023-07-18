@@ -32,20 +32,7 @@ export default {
     :products="
       products.filter((v) => category.list.includes(v.category)).slice(0, 4)
     "
-    class="wrap"
   />
 </template>
 
-<style scoped>
-.wrap {
-  position: relative;
-  top: 62px;
-  max-width: 1360px;
-  width: 100%;
-  margin: 0 auto;
-}
-
-.wrap:last-child {
-  padding-bottom: 100px;
-}
-</style>
+<style scoped></style>

@@ -2,11 +2,9 @@
 import { computed, ref } from "vue";
 import { RouterLink } from "vue-router";
 import { useStore } from "vuex";
-import CustomButton from "./CustomButton.vue";
 
 export default {
   name: "ShopHeader",
-  components: { CustomButton },
   setup() {
     const store = useStore();
     const products = computed(() => store.state.allProducts);
@@ -68,10 +66,10 @@ export default {
 
 <template>
   <div
-    class="w-full fixed top-0 z-50 py-3 bg-black dark:bg-white text-white dark:text-gray-300"
+    class="w-full fixed top-0 z-50 py-3 bg-white dark:bg-black text-gray-300 dark:text-white"
   >
     <div class="max-w-7xl mx-auto flex items-center justify-between">
-      <div class="flex items-center text-header dark:text-header-dark">
+      <div class="flex items-center">
         <h1>
           <router-link to="/">Vue Shop</router-link>
         </h1>
@@ -87,15 +85,12 @@ export default {
       </div>
       <div class="flex items-center px-2">
         <button @click="changeTheme" class="flex items-center justify-center">
-          <i
-            v-if="store.state.isDark"
-            class="bx bx-moon bx-sm text-headerBg"
-          ></i>
-          <i v-else class="bx bx-sun bx-sm text-headerBg"></i>
+          <i v-if="store.state.isDark" class="bx bx-sun bx-sm"></i>
+          <i v-else class="bx bx-moon bx-sm"></i>
         </button>
         <div class="relative mx-3">
           <input
-            class="p-2 rounded-sm bg-header bg-gray-500 dark:bg-gray-700 focus:outline-none"
+            class="p-2 rounded-sm bg-gray-700 dark:bg-gray-500 text-black dark:text-white focus:outline-none"
             type="text"
             placeholder="검색어를 입력해주세요"
             :value="inputData"
@@ -128,7 +123,7 @@ export default {
           :to="{ name: 'cart' }"
         >
           <span class="relative">
-            <i class="bx bx-shopping-bag bx-sm text-headerBg"></i>
+            <i class="bx bx-shopping-bag bx-sm"></i>
             <span
               class="inline-flex items-center justify-center absolute top-0 right-0 px-2 py-1 rounded-full bg-red text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2"
             >
@@ -141,23 +136,4 @@ export default {
   </div>
 </template>
 
-<style scoped>
-ul {
-  --tw-scale-x: 0.95;
-  --tw-scale-y: 0.95;
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y))
-    rotate(var(--tw-rotate)) skew(var(--tw-skew-x)) skewY(var(--tw-skew-y))
-    scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-  transition-property: color, background-color, border-color, fill, stroke,
-    opacity, box-shadow, transform, filter, -webkit-text-decoration-color,
-    -webkit-backdrop-filter;
-  transition-property: color, background-color, border-color,
-    text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter,
-    backdrop-filter;
-  transition-property: color, background-color, border-color,
-    text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter,
-    backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;
-  transition-duration: 0.2s;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-}
-</style>
+<style scoped></style>

@@ -31,7 +31,7 @@ export default {
       <img :src="product.image" class="transition-transform duration-300" />
     </figure>
     <div
-      class="card-body bg-gray-300 dark:bg-gray-900 text-gray-600 dark:text-gray-200"
+      class="card-body bg-gray-900 dark:bg-gray-300 text-gray-200 dark:text-gray-600"
     >
       <p class="card-title text-base">{{ product.title }}</p>
       <p class="text-base">${{ product.price }}</p>
