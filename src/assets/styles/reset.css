@@ -2,6 +2,7 @@
     margin : 0;
     padding : 0;
     box-sizing: border-box;
+    font-family: 'Noto Sans KR', sans-serif;
 }
 
 a {
@@ -9,9 +10,18 @@ a {
 }
 
 body {
-    background-color: #2b303b;
+    /* background-color: #2b303b; */
 }
 
+button{
+    background: inherit ;
+    border:none;
+    box-shadow:none;
+    border-radius:0;
+    padding:0;
+    overflow:visible; 
+    cursor:pointer
+}
 
 li, ul {
     list-style: none;
