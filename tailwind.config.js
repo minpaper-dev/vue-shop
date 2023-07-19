@@ -2,6 +2,7 @@ module.exports = {
   purge: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
   darkMode: 'class', 
   theme: {
+    
     colors: {
       gray: {
         100: '#242933',
@@ -17,7 +18,10 @@ module.exports = {
       black : '#191D24',
       mint : '#37CDBE',
       red : '#EF4444',
-      purple : '#641AE6',
+      purple : {
+        100 : '#641AE6',
+        200 : '#5014B8'
+      } ,
       white : '#FFFFFF',
     },
     extend: {},
