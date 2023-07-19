@@ -1,8 +1,8 @@
 <script lang="ts">
 import { computed, defineComponent } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, RouterLink } from "vue-router";
 import { useStore } from "vuex";
-import { Product } from "../common/types"; // 타입 임포트
+import { Product } from "../common/types";
 
 export default defineComponent({
   name: "ProductDetail",
@@ -20,7 +20,7 @@ export default defineComponent({
     const addToCart = (productInfo: Product) => {
       store.commit("increment");
       let cartStorage: { [key: string]: { count: number; id: number } } =
-        JSON.parse(localStorage.getItem("CART_DATA") || "") || {};
+        JSON.parse(localStorage.getItem("CART_DATA") || "{}");
 
       if (Object.keys(cartStorage).includes(String(productInfo.id))) {
         cartStorage[productInfo.id].count++;
@@ -30,6 +30,7 @@ export default defineComponent({
           [productInfo.id]: { count: 1, id: productInfo.id },
         };
       }
+      console.log(cartStorage);
       localStorage.setItem("CART_DATA", JSON.stringify(cartStorage));
     };
 
@@ -43,11 +44,11 @@ export default defineComponent({
 </script>
 
 <template>
-  <section class="main pt-16">
+  <section class="main text-gray-200 dark:text-gray-600">
     <section
       class="pt-4 lg:pt-5 pb-4 lg:pb-8 px-4 xl:px-2 xl:container mx-auto"
     >
-      <p class="text-sm breadcrumbs">
+      <p class="text-sm p-1 text-gray-200 dark:text-gray-600">
         {{ productInfo?.category }} > {{ productInfo?.title }}
       </p>
       <div class="lg:flex lg:items-center mt-6 md:mt-14 px-2 lg:px-0">
@@ -67,17 +68,19 @@ export default defineComponent({
           </div>
 
           <p class="mt-2 mb-4 text-3xl">${{ productInfo?.price }}</p>
-          <div class="card-actions">
+          <div class="flex items-center">
             <button
               @click="addToCart(productInfo)"
-              class="bg-purple text-white"
+              class="bg-purple-100 hover:bg-purple-200 text-white flex items-center justify-center p-4 rounded-lg text-sm font-bold mr-3"
             >
               장바구니에 담기
             </button>
-            <a
-              class="text-gray-600 border-2 border-solid border-gray-600 rounded"
-              >장바구니로 이동</a
+            <router-link
+              class="text-black dark:text-gray-600 hover:text-white hover:dark:text-gray-100 border border-solid border-black dark:border-gray-600 hover:border-gray-100 hover:bg-black hover:dark:bg-gray-600 flex items-center justify-center p-4 rounded-lg text-sm font-bold cursor-pointer"
+              :to="{ name: 'cart' }"
             >
+              장바구니로 이동
+            </router-link>
           </div>
         </div>
       </div>
@@ -88,12 +91,6 @@ export default defineComponent({
 <style scoped>
 .main {
   min-height: calc(100vh - 4rem - 224px);
-}
-.breadcrumbs {
-  max-width: 100%;
-  overflow-x: auto;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
 }
 
 figure {

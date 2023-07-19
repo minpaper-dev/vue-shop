@@ -26,10 +26,6 @@ export default {
       localStorage.setItem("isDark", JSON.stringify(isDark.value));
     };
 
-    const linkTo = (link: string) => {
-      window.location.href = `/${link}`;
-    };
-
     const changeText = (event: any) => {
       inputData.value = event.target.value;
       searchList.value = products.value.filter((v: Product) =>
@@ -63,7 +59,6 @@ export default {
 
     return {
       categoryList,
-      linkTo,
       store,
       isDark,
       changeTheme,
@@ -79,19 +74,27 @@ export default {
 
 <template>
   <div
-    class="w-full fixed top-0 z-50 py-3 bg-white dark:bg-black text-gray-300 dark:text-white"
+    class="w-full fixed top-0 z-50 py-4 bg-white dark:bg-black text-gray-300 dark:text-white drop-shadow-lg"
   >
     <div class="max-w-7xl mx-auto flex items-center justify-between">
       <div class="flex items-center">
-        <h1>
+        <h1 class="text-lg font-bold">
           <router-link to="/">Vue Shop</router-link>
         </h1>
         <div class="ml-8">
-          <router-link :to="{ name: 'fashion' }" class="px-4">패션</router-link>
-          <router-link :to="{ name: 'jewelery' }" class="px-4"
+          <router-link
+            :to="{ name: 'fashion' }"
+            class="px-4 py-2 rounded-lg hover:bg-gray-900 hover:dark:bg-gray-300"
+            >패션</router-link
+          >
+          <router-link
+            :to="{ name: 'jewelery' }"
+            class="px-4 py-2 rounded-lg hover:bg-gray-900 hover:dark:bg-gray-300"
             >액세서리</router-link
           >
-          <router-link :to="{ name: 'electronics' }" class="px-4"
+          <router-link
+            :to="{ name: 'electronics' }"
+            class="px-4 py-2 rounded-lg hover:bg-gray-900 hover:dark:bg-gray-300"
             >디지털</router-link
           >
         </div>
@@ -101,9 +104,9 @@ export default {
           <i v-if="store.state.isDark" class="bx bx-sun bx-sm"></i>
           <i v-else class="bx bx-moon bx-sm"></i>
         </button>
-        <div class="relative mx-3">
+        <div class="relative ml-3">
           <input
-            class="p-2 rounded-sm bg-gray-700 dark:bg-gray-500 text-black dark:text-white focus:outline-none"
+            class="p-3 rounded-sm text-sm bg-gray-700 dark:bg-gray-500 text-black dark:text-white placeholder:text-gray-300 placeholder:dark:text-gray-700 focus:outline-none"
             type="text"
             placeholder="검색어를 입력해주세요"
             :value="inputData"
@@ -127,7 +130,7 @@ export default {
           </ul>
         </div>
         <router-link
-          class="btn btn-ghost w-10 sm:w-12 ml-1"
+          class="flex items-center justify-center py-2 px-4 rounded-lg w-10 ml-1 hover:bg-gray-900 hover:dark:bg-gray-300"
           :to="{ name: 'cart' }"
         >
           <span class="relative">

@@ -10,7 +10,7 @@ const { product } = defineProps({
 
 <template>
   <a
-    class="card card-bordered border-gray-200 dark:border-gray-800 card-compact lg:card-normal"
+    class="card border border-gray-800 dark:border-gray-100 card-compact lg:card-normal"
     :href="`/product/${product?.id}`"
   >
     <figure class="flex h-80 bg-white overflow-hidden">

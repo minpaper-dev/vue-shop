@@ -42,10 +42,8 @@ export default {
 </script>
 
 <template>
-  <div
-    class="pt-4 lg:pt-5 pb-4 lg:pb-8 px-4 xl:px-2 xl:container mx-auto top-62"
-  >
-    <h3 class="text-gray-200 dark:text-gray-600">
+  <div class="pt-4 lg:pt-5 pb-4 lg:pb-8 px-4 xl:px-2 xl:container mx-auto">
+    <h3 class="text-sm p-1 text-gray-200 dark:text-gray-600">
       home > {{ categoryInfo[0].title }}
     </h3>
     <product-list
@@ -57,4 +55,8 @@ export default {
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.main {
+  min-height: calc(100vh - 4rem - 224px);
+}
+</style>

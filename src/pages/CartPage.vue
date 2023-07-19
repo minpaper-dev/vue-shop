@@ -1,5 +1,6 @@
 <script lang="ts">
 import { onMounted, ref, computed, Ref } from "vue";
+import { RouterLink } from "vue-router";
 import { useStore } from "vuex";
 
 import PaymentModal from "../components/PaymentModal.vue";
@@ -30,7 +31,19 @@ export default {
     const minusCount = (id: string) => {
       store.commit("decrement");
       localCart.value[id].count--;
-      localStorage.setItem("CART_DATA", JSON.stringify(localCart.value));
+
+      console.log(localCart.value);
+      console.log(cartProduct.value);
+      if (localCart.value[id].count) {
+        localStorage.setItem("CART_DATA", JSON.stringify(localCart.value));
+      } else {
+        delete localCart.value[id];
+        cartProduct.value = cartProduct.value.filter(
+          (v) => String(v.id) !== id
+        );
+        localStorage.setItem("CART_DATA", JSON.stringify(localCart.value));
+      }
+
       calcTotal();
     };
 
@@ -51,7 +64,7 @@ export default {
     };
 
     onMounted(() => {
-      localCart.value = JSON.parse(localStorage.getItem("CART_DATA") || "");
+      localCart.value = JSON.parse(localStorage.getItem("CART_DATA") || "{}");
 
       cartProduct.value = allProduct.value.filter((v: Product) =>
         Object.keys(localCart.value).includes(v.id.toString())
@@ -87,7 +100,7 @@ export default {
     <section
       class="pt-4 lg:pt-5 pb-4 lg:pb-8 px-4 xl:px-2 xl:container mx-auto"
     >
-      <div class="text-sm breadcrumbs text-gray-200 dark:text-gray-600">
+      <div class="text-sm p-1 breadcrumbs text-gray-200 dark:text-gray-600">
         홈 > 장바구니
       </div>
 
@@ -114,7 +127,7 @@ export default {
                 class="card-body px-1 lg:px-12 text-black dark:text-gray-600"
               >
                 <h2 class="card-title">
-                  <a class="link link-hover">
+                  <a class="link link-hover font-bold text-lg">
                     {{ cartItem.title }}
                   </a>
                 </h2>
@@ -124,19 +137,19 @@ export default {
                   }}
                 </p>
                 <div class="card-actions">
-                  <div class="btn-group">
+                  <div class="flex items-center">
                     <button
                       @click="minusCount(String(cartItem.id))"
-                      class="btn btn-primary"
+                      class="flex items-center justify-center px-4 py-2 rounded-lg bg-purple-100 hover:bg-purple-200 font-bold text-white text-base rounded-e-none"
                     >
                       -
                     </button>
-                    <button class="btn btn-ghost no-animation">
+                    <button class="px-4">
                       {{ localCart[cartItem.id].count }}
                     </button>
                     <button
                       @click="plusCount(String(cartItem.id))"
-                      class="btn btn-primary"
+                      class="flex items-center justify-center px-4 py-2 rounded-lg bg-purple-100 hover:bg-purple-200 font-bold text-white text-base rounded-s-none"
                     >
                       +
                     </button>
@@ -151,7 +164,7 @@ export default {
             <span class="text-xl md:text-2xl">총 ${{ totalPrice }}</span>
             <label
               for="confirm-modal"
-              class="modal-button btn btn-primary ml-5"
+              class="p-4 bg-purple-100 hover:bg-purple-200 text-white cursor-pointer rounded-lg ml-5"
               @click="setModalOpen"
             >
               구매하기
@@ -159,7 +172,18 @@ export default {
           </div>
         </div>
       </div>
-      <div v-else>장바구니가 비었습니다.</div>
+      <div v-else>
+        <div class="mt-20">
+          <p class="text-black dark:text-gray-600 text-2xl">
+            장바구니에 물품이 없습니다.
+          </p>
+          <router-link
+            to="/"
+            class="bg-purple-100 hover:bg-purple-200 text-white flex items-center justify-center p-4 rounded-lg text-sm font-bold mt-10 max-w-fit"
+            >담으러가기</router-link
+          >
+        </div>
+      </div>
     </section>
   </section>
   <PaymentModal
@@ -172,13 +196,6 @@ export default {
 <style scoped>
 .main {
   min-height: calc(100vh - 4rem - 224px);
-}
-
-.breadcrumbs {
-  max-width: 100%;
-  overflow-x: auto;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
 }
 
 figure {

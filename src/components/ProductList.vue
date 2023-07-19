@@ -9,9 +9,7 @@ const { category, products } = defineProps({
 </script>
 
 <template>
-  <section
-    class="pt-6 lg:pt-12 pb-4 lg:pb-8 px-4 xl:px-2 mt-10 xl:container mx-auto"
-  >
+  <section class="pt-6 pb-4 px-4 mt-10 mx-auto">
     <h2
       class="mb-5 lg:mb-8 text-3xl lg:text-4xl text-center font-bold text-gray-200 dark:text-gray-600"
     >
