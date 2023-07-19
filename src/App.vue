@@ -35,7 +35,7 @@ export default {
       store.commit("setIsDark", theme.value === "true");
 
       // 장바구니 설정
-      const cart = JSON.parse(localStorage.getItem("CART_DATA") || "");
+      const cart = JSON.parse(localStorage.getItem("CART_DATA") || "{}");
       Object.values(cart).map((v: any) => (cartCount.value += v.count));
       store.commit("increment", cartCount.value);
     });
