@@ -9,21 +9,22 @@ const { product } = defineProps({
 </script>
 
 <template>
-  <router-link :to="`/product/${product?.id}`">이동!!!!!!</router-link>
-  <a
-    class="card border border-gray-800 dark:border-gray-100 card-compact lg:card-normal"
-    :href="`/product/${product?.id}`"
-  >
-    <figure class="flex h-80 bg-white overflow-hidden">
-      <img :src="product?.image" class="transition-transform duration-300" />
-    </figure>
+  <router-link :to="`/product/${product?.id}`">
     <div
-      class="card-body bg-gray-900 dark:bg-gray-300 text-gray-200 dark:text-gray-600"
+      class="card border border-gray-800 dark:border-gray-100 card-compact lg:card-normal"
+      :href="`/product/${product?.id}`"
     >
-      <p class="card-title text-base">{{ product?.title }}</p>
-      <p class="text-base">${{ product?.price }}</p>
+      <figure class="flex h-80 bg-white overflow-hidden">
+        <img :src="product?.image" class="transition-transform duration-300" />
+      </figure>
+      <div
+        class="card-body bg-gray-900 dark:bg-gray-300 text-gray-200 dark:text-gray-600"
+      >
+        <p class="card-title text-base">{{ product?.title }}</p>
+        <p class="text-base">${{ product?.price }}</p>
+      </div>
     </div>
-  </a>
+  </router-link>
 </template>
 
 <style scoped>
