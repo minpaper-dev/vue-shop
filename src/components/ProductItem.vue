@@ -1,14 +1,15 @@
 <script lang="ts" setup>
-import { Product } from "../common/types";
+import { Product } from '../common/types'
 
 const { product } = defineProps({
   product: {
     type: Object as () => Product,
   },
-});
+})
 </script>
 
 <template>
+  <router-link :to="`/product/${product?.id}`">이동!!!!!!</router-link>
   <a
     class="card border border-gray-800 dark:border-gray-100 card-compact lg:card-normal"
     :href="`/product/${product?.id}`"
